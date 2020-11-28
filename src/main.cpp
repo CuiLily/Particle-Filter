@@ -88,16 +88,16 @@ int main() {
 		
 		// Initialize particle filter if this is the first time step.
 		if (!pf.initialized()) {
-			n_x = N_x_init(gen);
+			n_x = N_x_init(gen);//随机数产生
 			n_y = N_y_init(gen);
 			n_theta = N_theta_init(gen);
 			pf.init(gt[i].x + n_x, gt[i].y + n_y, gt[i].theta + n_theta, sigma_pos);
 		}
-		else {
+		else {//如果不是第一次，就预测粒子下一次状态
 			// Predict the vehicle's next state (noiseless).
 			pf.prediction(delta_t, sigma_pos, position_meas[i-1].velocity, position_meas[i-1].yawrate);
 		}
-		// simulate the addition of noise to noiseless observation data.
+		// simulate the addition of noise to noiseless observation data.模拟将噪声添加到无噪声观测数据中。
 		vector<LandmarkObs> noisy_observations;
 		LandmarkObs obs;
 		for (int j = 0; j < observations.size(); ++j) {

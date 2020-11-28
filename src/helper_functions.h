@@ -57,8 +57,8 @@ inline double * getError(double gt_x, double gt_y, double gt_theta, double pf_x,
 	static double error[3];
 	error[0] = fabs(pf_x - gt_x);
 	error[1] = fabs(pf_y - gt_y);
-	error[2] = fabs(pf_theta - gt_theta);
-	error[2] = fmod(error[2], 2.0 * M_PI);
+	error[2] = fabs(pf_theta - gt_theta);//theta以弧度（rad）为单位
+	error[2] = fmod(error[2], 2.0 * M_PI); //返回 x 除以 y 的余数
 	if (error[2] > M_PI) {
 		error[2] = 2.0 * M_PI - error[2];
 	}
@@ -81,7 +81,7 @@ inline bool read_map_data(std::string filename, Map& map) {
 	// Declare single line of map file:
 	std::string line_map;
 
-	// Run over each single line:
+	// Run over each single line: getline()此函数可读取整行，包括前导和嵌入的空格，并将其存储在字符串对象中。
 	while(getline(in_file_map, line_map)){
 
 		std::istringstream iss_map(line_map);
